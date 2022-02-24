@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Container, Typography } from "@mui/material";
+import List from "./components/List/List";
+import { todos } from "./store/index";
 
-function App() {
+const App = () => {
+  const [todoList, setTodoList] = useState(todos);
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+  };
+
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+    const items = reorder(
+      todoList,
+      result.source.index,
+      result.destination.index
+    );
+    setTodoList(items);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container maxWidth="xl">
+      <Typography variant="h4" align="center" sx={{ mt: 4, fontWeight: 600 }}>
+        React Todo List
+      </Typography>
+      <List items={todoList} onDragEnd={onDragEnd} />
+    </Container>
   );
-}
+};
 
 export default App;
