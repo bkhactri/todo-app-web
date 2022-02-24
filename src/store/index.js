@@ -29,4 +29,10 @@ export const todos = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
   },
+  {
+    id: 6,
+    title: "Task 6",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+  },
 ];

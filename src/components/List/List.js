@@ -2,9 +2,9 @@ import { Container, Grid } from "@mui/material";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Item from "../Item/Item";
 
-const List = ({ items, onDragEnd }) => {
+const List = ({ items, onDragEnd, onDeleteItem, onEditItem }) => {
   return (
-    <Container maxWidth="xl" sx={{ mt: 8 }}>
+    <Container maxWidth="xl" sx={{ mt: 4 }}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -18,11 +18,14 @@ const List = ({ items, onDragEnd }) => {
               >
                 {items.length > 0
                   ? items.map((item, index) => (
-                      <Grid item xs={12} sm={4} md={4} lg={3} key={item.id}>
+                      <Grid item xs={12} sm={4} md={4} lg={4} key={item.id}>
                         <Item
                           key={item.id}
+                          id={item.id}
                           title={item.title}
                           description={item.description}
+                          onEditItem={onEditItem}
+                          onDelete={() => onDeleteItem(item.id)}
                           index={index}
                         />
                       </Grid>
